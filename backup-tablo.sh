@@ -3,12 +3,12 @@
 # Copyright (C) 2019 Robert Chavers
 #
 # Distributed under the MIT License.
-# (See accompanying file LICENSE file or copy at http://opensource.org/licenses/MIT)
+# (See accompanying LICENSE file or http://opensource.org/licenses/MIT)
 
 ## requirements to use this script:
 ##   bash 4.4 or greater
 ## external utilities:
-##   ts, find, rm, tail, kill, ps, lftp, awk, ls, mkdir, mv, find
+##   ts, find, rm, tail, kill, ps, lftp, awk, ls, mkdir, mv
 
 ## restore command example:
 ## mkdir /tmp/sdh1
@@ -151,7 +151,7 @@ process_deleted_shows () {
   # really erase shows that were moved to deleted after the days_to_keep_deleted has passed
   if [ "$days_to_keep_deleted" != "0" ]; then
     # you *must* have bash 4.4 or greater to use 'mapfile -d'
-    mapfile -d '' need_to_delete < <(/usr/bin/find ${path_deleted}/* -type d -ctime $days_to_keep_deleted -print0)
+    mapfile -d '' need_to_delete < <(/usr/bin/find ${path_deleted}/* -maxdepth 0 -type d -ctime +${days_to_keep_deleted})
     for i in ${need_to_delete[@]}; do
       mylog "deleting show that was deleted from tablo more than $days_to_keep_deleted days: $i"
       /bin/rm -rf $i
