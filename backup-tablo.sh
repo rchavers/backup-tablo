@@ -28,7 +28,7 @@
 ## variables you will most likely need to change
 ##
 tablo_ip_or_host="192.168.0.32"			#ip address (or hostname) of tablo device
-path_tablo="/mnt/backups/tablo"			#path to your backup location (you needs lots of free space :-)
+path_tablo="/mnt/backups/tablo"			#path to your backup location (you need lots of free space :-)
 
 path_backups="${path_tablo}/rec"		#where to store your tablo shows
 path_deleted="${path_tablo}/deleted"		#where to store your deleted tablo shows
