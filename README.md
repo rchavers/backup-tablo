@@ -15,9 +15,9 @@ This script is not perfect.  I have not found a way to access the show log/ fold
 
 ## Requirements to use this script:
 * a Linux OS with bash 4.4 or greater
-* needed utilities: ts, find, rm, tail, kill, ps, lftp, awk, ls, mkdir, mv
+* needed utilities: ts, find, rm, tail, kill, ps, lftp, awk, ls, mkdir, mv, test, touch
 
-_Most of these are probably included by default with your OS (find, rm, tail, kill, ps, awk, ls, mkdir, mv), some will need to be installed (probably lftp, ts)_
+_Most of these are probably included by default with your OS (find, rm, tail, kill, ps, awk, ls, mkdir, mv, test, touch), some will need to be installed (probably lftp, ts)_
 
 install lftp and ts on Ubuntu:
 <pre>apt update && apt install lftp moreutils</pre>
