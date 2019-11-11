@@ -21,11 +21,11 @@
 tablo_ip_or_host="192.168.0.32"			#ip address (or hostname) of tablo device
 path_backups="/mnt/backups/tablo/rec"		#where to store your tablo shows
 path_deleted="/mnt/backups/tablo/deleted"	#where to store your deleted tablo shows
+path_logfile="/mnt/backups/tablo/log/backup-tablo.log"		#the location of the log file
 
-pidfile="/tmp/backup-tablo.pid"			#the temporary pid file while the program is running
-logfile="/var/log/backup-tablo.log"		#the location of the log file
-max_log_lines=1000				#number of old lines to keep in the logfile before the program runs
-log_to_file=0					#set to 1 to always log to logfile (or call program with --log argument)
+path_pidfile="/tmp/backup-tablo.pid"			#the temporary pid file while the program is running
+max_log_lines=1000				#number of old lines to keep in path_logfile before the program runs
+log_to_file=0					#set to 1 to always log to path_logfile (or call program with --log argument)
 days_to_keep_deleted="14"			#use 0 for unlimited days
 
 
@@ -53,7 +53,7 @@ need_to_delete=()
 while [ "$1" != "" ]; do
   case $1 in
     -l | --log )
-      # log output to $logfile
+      # log output to $path_logfile
       log_to_file=1
       ;;
   esac
@@ -64,8 +64,8 @@ done
 # first time running this program can take days since tablo only has 10/100 ethernet
 # subsequent running is much quicker.  you can safely stop and restart this program
 #
-if [ -e $pidfile ]; then
-  pid="$(<${pidfile})"
+if [ -e $path_pidfile ]; then
+  pid="$(<${path_pidfile})"
   # kill -0 just checks if we *can* kill, it does not send a kill signal
   # basically, this is just testing to see if the process is really running
   if /bin/kill -0 &>1 > /dev/null ${pid}; then
@@ -74,17 +74,17 @@ if [ -e $pidfile ]; then
     echo "WARNING: $0 (PID ${pid}) was started ${runtime} seconds ago; will not continue."
     exit 0
   else
-    #not already running, so remove orphan pidfile
-    /bin/rm ${pidfile}
+    #not already running, so remove orphan path_pidfile
+    /bin/rm ${path_pidfile}
   fi
 fi
-trap "/bin/rm ${pidfile}; exit" INT TERM EXIT
-echo $$ >${pidfile}
+trap "/bin/rm ${path_pidfile}; exit" INT TERM EXIT
+echo $$ >${path_pidfile}
 
-# prune the logfile to a max size of $max_log_lines
+# prune the path_logfile to a max size of $max_log_lines
 #
 if (( ${log_to_file} )); then
-  echo "$(/usr/bin/tail -n $max_log_lines $logfile)" > $logfile
+  echo "$(/usr/bin/tail -n $max_log_lines $path_logfile)" > $path_logfile
 fi
 
 
@@ -97,7 +97,7 @@ mylog () {
   # simple log funtion to capture date and time in output
   tstamp=$(echo|/usr/bin/ts '[%Y-%m-%d %H:%M:%S]')
   if (( ${log_to_file} )); then
-    echo "${tstamp}${1}" >> $logfile
+    echo "${tstamp}${1}" >> $path_logfile
   else
     echo "${tstamp}${1}"
   fi
@@ -163,7 +163,7 @@ backup_tablo () {
   # mirror the /pvr/ directory from the tablo webserver to our local directory
   lftp_cmd="open http://${tablo_ip_or_host}:18080; mirror --verbose=1 --exclude [^/]+/log/$ --exclude [^/]+/tmp/$ --delete /pvr/ ${path_backups}"
   if (( $log_to_file )); then
-    /usr/bin/lftp -c "${lftp_cmd}" 2>&1 | /usr/bin/ts '[%Y-%m-%d %H:%M:%S]' >> $logfile
+    /usr/bin/lftp -c "${lftp_cmd}" 2>&1 | /usr/bin/ts '[%Y-%m-%d %H:%M:%S]' >> $path_logfile
   else
     /usr/bin/lftp -c "${lftp_cmd}" 2>&1 | /usr/bin/ts '[%Y-%m-%d %H:%M:%S]'
   fi
