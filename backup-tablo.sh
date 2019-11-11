@@ -11,9 +11,10 @@
 ##   ts, find, rm, tail, kill, ps, lftp, awk, ls, mkdir, mv
 
 ## restore command example:
-## mkdir /tmp/sdh1
-## mount /dev/sdh1 /tmp/sdh1
-## rsync -a --info=progress2 --no-inc-recursive /mnt/backups/tablo/rec/ /tmp/sdh1/rec/
+## mkdir /tmp/sdX1
+## mount /dev/sdX1 /tmp/sdX1
+## rsync -a --info=progress2 --no-inc-recursive /mnt/backups/tablo/rec/ /tmp/sdX1/rec/
+## umount /tmp/sdX1
 
 ##
 ## variables you will most likely need to change
