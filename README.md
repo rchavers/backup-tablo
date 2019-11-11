@@ -65,7 +65,9 @@ mount /dev/sdX1 /tmp/sdX1
 *note: rsync needs the / after the source directory /mnt/backups/table/rec/* **<----**
 <pre>
 rsync -a --info=progress2 --no-inc-recursive /mnt/backups/tablo/rec/ /tmp/sdX1/rec/
+</pre>
   or (you can use cp but I prefer rsync since it can resume where it left off)
+<pre>
 cp -av /mnt/backups/tablo/rec/. /tmp/sdX1/rec/
 </pre>
 * Don't forget to unmount the new drive when the copy is finished
