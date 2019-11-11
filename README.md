@@ -38,9 +38,8 @@ chmod +x /usr/local/bin/backups/backup-tablo.sh
 
 ### Edit global variables before running:
 <pre>
-tablo_ip_or_host="192.168.0.32"                 #ip address (or hostname) of tablo device
-path_backups="/mnt/backups/tablo/rec"           #where to store your tablo shows
-path_deleted="/mnt/backups/tablo/deleted"       #where to store your deleted tablo shows 
+tablo_ip_or_host="192.168.0.32"			#ip address (or hostname) of tablo device
+path_tablo="/mnt/backups/tablo"			#path to your backup location (you need lots of free space :-)
 </pre>
 
 ### Example cron entry:
