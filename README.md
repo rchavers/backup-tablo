@@ -62,9 +62,16 @@ Unfortunately, I do not know a way to restore the shows directly to a Tablo with
 mkdir /tmp/sdX1
 mount /dev/sdX1 /tmp/sdX1
 </pre>
-* Copy the shows to the new drive's /rec/ folder (cp, rsync, etc.)
+* Copy the shows to the new drive's /rec/ folder (cp, rsync, etc.) \
+*note: rsync needs the / after the source directory /mnt/backups/table/rec/* **<----**
 <pre>
 rsync -a --info=progress2 --no-inc-recursive /mnt/backups/tablo/rec/ /tmp/sdX1/rec/
+  or (you can use cp but I prefer rsync since it can resume where it left off)
+cp -av /mnt/backups/tablo/rec/. /tmp/sdX1/rec/
+</pre>
+* Don't forget to unmount the new drive when the copy is finished
+<pre>
+umount /tmp/sdX1
 </pre>
 
 ### NOTES:
