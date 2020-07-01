@@ -165,7 +165,7 @@ process_deleted_shows () {
   # really erase shows that were moved to deleted after the days_to_keep_deleted has passed
   if [ "$days_to_keep_deleted" != "0" ]; then
     # you *must* have bash 4.4 or greater to use 'mapfile -d'
-    mapfile -d '' need_to_delete < <(/usr/bin/find ${path_deleted}/* -maxdepth 0 -type d -ctime +${days_to_keep_deleted})
+    mapfile -d '' need_to_delete < <(/usr/bin/find ${path_deleted}/* -maxdepth 0 -type d -ctime +${days_to_keep_deleted} 2>/dev/null)
     for i in ${need_to_delete[@]}; do
       mylog "deleting show that was deleted from tablo more than $days_to_keep_deleted days: $i"
       /bin/rm -rf $i
